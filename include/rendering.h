@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:35:13 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/05 21:41:23 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/19 17:33:29 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,19 @@ typedef struct s_camera {
     t_vector direction;
     float fov;
 } t_camera;
+typedef enum OBJECTS_TYPE{
+	NOTHING,
+	SPHERE,
+	CYLINDER,
+	PLANE,
+}	OBJECTS_TYPE;
 
+typedef struct object_info{
+	OBJECTS_TYPE type;
+	void	*obj;
+	t_vector	intersection_point;
+	t_vector normal;
+}	object_info;
 // Main MiniRT struct to hold scene elements
 typedef struct s_scene {
     t_ambient *ambient;
@@ -91,6 +103,7 @@ typedef struct s_scene {
     t_sphere *spheres;
     t_plane *planes;
     t_cylinder *cylinders;
+	object_info	*object_hit;
 }	t_scene;
 
 // MinilibX window structure
@@ -103,6 +116,8 @@ typedef struct s_mlx {
     int line_len; 
     int endian;
 } t_mlx;
+
+
 
 void put_pixel(t_mlx *mlx, int x, int y, int color) ;
 // Function prototypes
@@ -145,5 +160,7 @@ void move_camera(t_camera *cam, t_vector move_dir, float speed);
 t_vector compute_right_vector(t_vector direction);
 void rotate_camera_y(t_camera *camera, float angle);
 void rotate_camera_x(t_camera *camera, float angle);
+object_info	object_detector(int i , int j ,t_scene *scene);
+int mouse_handler(int button, int x, int y, void *param);
 
 #endif

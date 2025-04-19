@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 23:31:53 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/17 22:03:37 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/19 17:54:38 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,11 @@ int main(void)
 	}
 
 	minirt.scene = &scene;
-	print_scene(minirt.scene);
+	// print_scene(minirt.scene);
 
 	render_scene(scene, minirt.mlx);
     mlx_put_image_to_window(minirt.mlx->mlx, minirt.mlx->mlx_win, minirt.mlx->img, 0, 0);
+	mlx_mouse_hook(minirt.mlx->mlx_win, mouse_handler, &minirt);
     mlx_loop(minirt.mlx->mlx);
 
     free(scene.spheres);

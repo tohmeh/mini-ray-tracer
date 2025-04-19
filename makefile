@@ -26,6 +26,7 @@ SRCS = \
 	$(SRC_DIR)/rendering/rendering_related/lighting.c \
 	$(SRC_DIR)/rendering/math/normal_vector_math.c \
 	$(SRC_DIR)/rendering/key_hooks/triggers.c \
+	$(SRC_DIR)/rendering/key_hooks/mouse_object_detection.c \
 	$(SRC_DIR)/parsing/getters/getters.c \
 	$(SRC_DIR)/parsing/services/ambient_service.c \
 	$(SRC_DIR)/parsing/services/camera_service.c \

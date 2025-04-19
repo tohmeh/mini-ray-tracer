@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 01:08:40 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/05 21:43:29 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/19 16:29:24 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void render_scene(t_scene scene, t_mlx *mlx)
                     closest_t = t_sphere;
                     intersection_point = add_vectors(ray.b, multiply_vector_by_scalar(ray.D, t_sphere));
                     normal = sphere_normal_vector(*sphere, intersection_point);
-                    // Convert t_color to int color
                     pixel_color = (sphere->color.r << 16) | (sphere->color.g << 8) | sphere->color.b;
                 }
                 sphere = sphere->next;
