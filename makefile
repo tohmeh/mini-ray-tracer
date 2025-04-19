@@ -58,11 +58,16 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(dir $(OBJS))
 
+# Clone minilibx-linux if not already cloned
+$(MINILIBX_DIR):
+	@git clone https://github.com/42paris/minilibx-linux.git $(MINILIBX_DIR)
+
+# Compile libmlx after ensuring repo is cloned
+$(MINILIBX): | $(MINILIBX_DIR)
+	@$(MAKE) -C $(MINILIBX_DIR)
+
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
-
-$(MINILIBX):
-	@$(MAKE) -C $(MINILIBX_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
