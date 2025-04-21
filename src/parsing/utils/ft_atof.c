@@ -3,18 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gakhoury <gakhoury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 18:26:14 by gakhoury          #+#    #+#             */
-/*   Updated: 2025/04/05 12:59:06 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/19 17:28:07 by gakhoury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/miniRT.h"
 
-static float	handle_integer_part(const char *str, int *i)
+void	ft_error(const char *msg)
 {
-	float	n;
+	perror(msg);
+	exit(EXIT_FAILURE);
+}
+
+static double	handle_integer_part(const char *str, int *i)
+{
+	double	n;
 
 	n = 0;
 	while (str[*i] >= '0' && str[*i] <= '9')
@@ -25,9 +31,9 @@ static float	handle_integer_part(const char *str, int *i)
 	return (n);
 }
 
-static float	handle_decimal_part(const char *str, int *i)
+static double	handle_decimal_part(const char *str, int *i)
 {
-	float	decimal;
+	double	decimal;
 	int		decimal_places;
 
 	decimal = 0;
@@ -53,9 +59,10 @@ static float	handle_decimal_part(const char *str, int *i)
 float	ft_atof(const char *str)
 {
 	int		i;
-	float	n;
-	float	decimal;
+	double	n;
+	double	decimal;
 	int		sign;
+	double	result;
 
 	i = 0;
 	sign = 1;
@@ -69,5 +76,8 @@ float	ft_atof(const char *str)
 	}
 	n = handle_integer_part(str, &i);
 	decimal = handle_decimal_part(str, &i);
-	return ((n + decimal) * sign);
+	result = (n + decimal) * sign;
+	if (result > FLT_MAX || result < -FLT_MAX || isnan(result) || isinf(result))
+		ft_error("Float overflow or underflow");
+	return ((float)result);
 }

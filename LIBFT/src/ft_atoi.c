@@ -6,20 +6,38 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:53:00 by mtohmeh           #+#    #+#             */
-/*   Updated: 2024/08/02 14:05:02 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 14:40:26 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/../include/LIBFT.h"
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+static void	ft_error(const char *msg)
+{
+	perror(msg);
+	exit(EXIT_FAILURE);
+}
+
+static void	check_overflow(long result, int digit, int sign)
+{
+	if (sign == 1 && result > (INT_MAX - digit) / 10)
+		ft_error("Integer overflow");
+	if (sign == -1 && (-result) < (INT_MIN + digit) / 10)
+		ft_error("Integer underflow");
+}
 
 int	ft_atoi(const char *str)
 {
-	int	i;
-	int	n;
-	int	sign;
+	long	result;
+	int		sign;
+	int		i;
+	int		digit;
 
+	result = 0;
 	sign = 1;
-	n = 0;
 	i = 0;
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
@@ -31,8 +49,10 @@ int	ft_atoi(const char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		n = n * 10 + str[i] - '0';
+		digit = str[i] - '0';
+		check_overflow(result, digit, sign);
+		result = result * 10 + digit;
 		i++;
 	}
-	return (n * sign);
+	return ((int)(result * sign));
 }

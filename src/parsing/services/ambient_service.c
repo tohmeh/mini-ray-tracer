@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ambient_service.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gakhoury <gakhoury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 17:37:11 by gakhoury          #+#    #+#             */
-/*   Updated: 2025/04/05 13:33:15 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/19 18:08:28 by gakhoury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 int	parts_size(char **line_parts)
 {
-	int	length = 0;
+	int	length;
+
+	length = 0;
 	while (line_parts[length])
 	{
-		length++;	
+		length++;
 	}
 	return (length);
 }
+
 int	validate_ambient_lighting(char **line_parts)
 {
 	if (parts_size(line_parts) != 3)

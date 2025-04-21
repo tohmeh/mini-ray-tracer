@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:45:03 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/19 17:59:37 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 15:42:35 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,71 @@
 #define KEY_LEFT 65361
 #define KEY_RIGHT 65363
 #define KEY_ESC 65307
+#define KEY_T 116
+#define KEY_F 102
+#define KEY_G 103
+#define KEY_H 104
+#define KEY_R 114
+
+typedef enum DIRECTIONS{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+}	DIRECTIONS;
 
 int	close_window(t_minirt *minirt_struct)
 {
 	mlx_destroy_window(minirt_struct->mlx->mlx, minirt_struct->mlx->mlx_win);
 	exit(0);
 	return (0);
+}
+
+int	translate_object(t_minirt *minirt, DIRECTIONS direction)
+{
+	t_scene *scene = minirt->scene;
+	t_vector delta = {0, 0, 0};
+	t_sphere *s;
+	t_cylinder *c;
+	float move_step = 0.2f;
+
+	if (!scene->object_hit)
+		return (0);
+
+	// Set direction vector
+	if (direction == UP)
+		delta.z = move_step;
+	else if (direction == DOWN)
+		delta.z = -move_step;
+	else if (direction == LEFT)
+		delta.x = -move_step;
+	else if (direction == RIGHT)
+		delta.x = move_step;
+
+	if (scene->object_hit->type == SPHERE)
+	{
+		s = (t_sphere *)scene->object_hit->obj;
+		s->center = add_vectors(s->center, delta);
+	}
+	else if (scene->object_hit->type == CYLINDER)
+	{
+		c = (t_cylinder *)scene->object_hit->obj;
+		c->center = add_vectors(c->center, delta);
+	}
+	else if (scene->object_hit->type == PLANE)
+	{
+		t_plane *p = (t_plane *)scene->object_hit->obj;
+		p->point = add_vectors(p->point, delta);
+	}
+
+	return (1);
+}
+
+int rotate_object(t_minirt *minirt)
+{
+	t_scene	*scene = minirt->scene;
+	
+	
 }
 
 int mouse_handler(int button, int x, int y, void *param)
@@ -98,6 +157,7 @@ int mouse_handler(int button, int x, int y, void *param)
                 minirt->mlx->mlx_win, minirt->mlx->img, 0, 0);
         }
     }
+	
     return (0);
 }
 
@@ -148,7 +208,17 @@ int	key_hook(int keycode, t_minirt *minirt_struct)
 
 	if (keycode == KEY_DOWN) // Look down
 		rotate_camera_x(cam, rotation_speed);
-
+	if (keycode == KEY_T)
+		translate_object(minirt_struct, UP);
+	if (keycode == KEY_G)
+		translate_object(minirt_struct, DOWN);
+	if (keycode == KEY_F)
+		translate_object(minirt_struct, LEFT);
+	if (keycode == KEY_H)
+		translate_object(minirt_struct, RIGHT);
+	
+	if (keycode == KEY_R)
+		rotate_object(minirt_struct);
 	// Re-render scene and update window
 	render_scene(*minirt_struct->scene, minirt_struct->mlx);
 	mlx_put_image_to_window(minirt_struct->mlx->mlx,

@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:10:37 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/19 17:24:28 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 14:17:54 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 #include "../minilibx-linux/mlx_int.h"
 #include <fcntl.h>
 #include "../LIBFT/include/LIBFT.h"
+#include <limits.h>
+#include <float.h>
+
 typedef struct s_minirt{
 	t_mlx *mlx;
 	t_scene *scene;
