@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:45:03 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 15:42:35 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 20:42:05 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,24 @@
 #define KEY_G 103
 #define KEY_H 104
 #define KEY_R 114
+#define KEY_J 106
+#define KEY_K 107
+#define KEY_L 108
 
-typedef enum DIRECTIONS{
+typedef enum DIRECTIONS
+{
 	UP,
 	DOWN,
 	LEFT,
 	RIGHT
 }	DIRECTIONS;
+
+typedef enum AXIS
+{
+	X,
+	Y,
+	Z
+}	AXIS;
 
 int	close_window(t_minirt *minirt_struct)
 {
@@ -42,15 +53,17 @@ int	close_window(t_minirt *minirt_struct)
 
 int	translate_object(t_minirt *minirt, DIRECTIONS direction)
 {
-	t_scene *scene = minirt->scene;
-	t_vector delta = {0, 0, 0};
-	t_sphere *s;
-	t_cylinder *c;
-	float move_step = 0.2f;
+	t_scene		*scene;
+	t_sphere	*s;
+	t_cylinder	*c;
+	float		move_step;
+	t_plane		*p;
 
+	scene = minirt->scene;
+	t_vector delta = {0, 0, 0};
+	move_step = 0.2f;
 	if (!scene->object_hit)
 		return (0);
-
 	// Set direction vector
 	if (direction == UP)
 		delta.z = move_step;
@@ -60,7 +73,6 @@ int	translate_object(t_minirt *minirt, DIRECTIONS direction)
 		delta.x = -move_step;
 	else if (direction == RIGHT)
 		delta.x = move_step;
-
 	if (scene->object_hit->type == SPHERE)
 	{
 		s = (t_sphere *)scene->object_hit->obj;
@@ -73,92 +85,154 @@ int	translate_object(t_minirt *minirt, DIRECTIONS direction)
 	}
 	else if (scene->object_hit->type == PLANE)
 	{
-		t_plane *p = (t_plane *)scene->object_hit->obj;
+		p = (t_plane *)scene->object_hit->obj;
 		p->point = add_vectors(p->point, delta);
 	}
-
 	return (1);
 }
-
-int rotate_object(t_minirt *minirt)
+t_vector rotate_vector_z(t_vector v, float angle)
 {
-	t_scene	*scene = minirt->scene;
-	
-	
+	t_vector result;
+	result.x = v.x * cos(angle) - v.y * sin(angle);
+	result.y = v.x * sin(angle) + v.y * cos(angle);
+	result.z = v.z; // Z stays the same
+	return result;
+}
+t_vector rotate_vector_x(t_vector v, float angle)
+{
+	t_vector result;
+	result.x = v.x; // X stays the same
+	result.y = v.y * cos(angle) - v.z * sin(angle);
+	result.z = v.y * sin(angle) + v.z * cos(angle);
+	return result;
+}
+t_vector rotate_vector_y(t_vector v, float angle)
+{
+	t_vector result;
+
+	result.x = v.x * cos(angle) + v.z * sin(angle);
+	result.y = v.y;
+	result.z = -v.x * sin(angle) + v.z * cos(angle);
+	return (result);
 }
 
-int mouse_handler(int button, int x, int y, void *param)
-{
-    t_minirt *minirt;
-    t_scene *scene;
-    object_info hit;
-    float delta;
-    t_sphere *s;
-    t_cylinder *c;
 
-    minirt = (t_minirt *)param;
-    scene = minirt->scene;
-    if (button == 1)
+int rotate_object(t_minirt *minirt, AXIS AXE)
+{
+    t_scene *scene = minirt->scene;
+    float angle = 0.1f; // Rotation angle in radians
+
+    if (!scene->object_hit)
+        return (0);
+
+    if (AXE == X)
     {
-        printf("Mouse clicked at x=%d, y=%d\n", x, y);
-        hit = object_detector(x, y, scene);
-        
-        // Free previous allocation if it exists
-        if (scene->object_hit)
-            free(scene->object_hit);
-            
-        scene->object_hit = malloc(sizeof(object_info));
-        scene->object_hit->intersection_point = hit.intersection_point;
-        scene->object_hit->normal = hit.normal;
-        scene->object_hit->obj = hit.obj;
-        scene->object_hit->type = hit.type;
-        
-        if (hit.type != NOTHING)
+        if (scene->object_hit->type == CYLINDER)
         {
-            if (hit.type == SPHERE)
-                printf("You clicked on a sphere!\n");
-            else if (hit.type == PLANE)
-                printf("You clicked on a plane!\n");
-            else if (hit.type == CYLINDER)
-                printf("You clicked on a cylinder!\n");
+            t_cylinder *obj = (t_cylinder *)scene->object_hit->obj;
+            obj->axis = rotate_vector_x(obj->axis, angle);
+            obj->axis = normalize_vector(obj->axis);
+        }
+        else if (scene->object_hit->type == PLANE)
+        {
+            t_plane *obj = (t_plane *)scene->object_hit->obj;
+            obj->normal = rotate_vector_x(obj->normal, angle);
+            obj->normal = normalize_vector(obj->normal);
         }
     }
-    if (button == 4 || button == 5)
+    else if (AXE == Y)
     {
-        if (scene->object_hit)
+        if (scene->object_hit->type == CYLINDER)
         {
-            delta = (button == 4) ? 0.1f : -0.1f;
-            if (scene->object_hit->type == SPHERE)
-            {
-                printf("bla bla bla\n");
-                s = (t_sphere *)scene->object_hit->obj;
-                s->radius += delta;
-                if (s->radius < 0.1f)
-                    s->radius = 0.1f;
-                fflush(stdout);
-                printf("Sphere resized: radius = %.2f\n", s->radius);
-            }
-            else if (scene->object_hit->type == CYLINDER)
-            {
-                c = (t_cylinder *)scene->object_hit->obj;
-                c->diameter += delta;
-                c->height += delta;
-                if (c->diameter < 0.1f)
-                    c->diameter = 0.1f;
-                if (c->height < 0.1f)
-                    c->height = 0.1f;
-                printf("Cylinder resized: radius = %.2f, height = %.2f\n",
-                    c->diameter, c->height);
-            }
-            
-            // Render the scene with the updated object
-            render_scene(*scene, minirt->mlx);
-            mlx_put_image_to_window(minirt->mlx->mlx,
-                minirt->mlx->mlx_win, minirt->mlx->img, 0, 0);
+            t_cylinder *obj = (t_cylinder *)scene->object_hit->obj;
+            obj->axis = rotate_vector_y(obj->axis, angle);
+            obj->axis = normalize_vector(obj->axis);
+        }
+        else if (scene->object_hit->type == PLANE)
+        {
+            t_plane *obj = (t_plane *)scene->object_hit->obj;
+            obj->normal = rotate_vector_y(obj->normal, angle);
+            obj->normal = normalize_vector(obj->normal);
         }
     }
+    else if (AXE == Z)
+    {
+        if (scene->object_hit->type == CYLINDER)
+        {
+            t_cylinder *obj = (t_cylinder *)scene->object_hit->obj;
+            obj->axis = rotate_vector_z(obj->axis, angle);
+            obj->axis = normalize_vector(obj->axis);
+        }
+        else if (scene->object_hit->type == PLANE)
+        {
+            t_plane *obj = (t_plane *)scene->object_hit->obj;
+            obj->normal = rotate_vector_z(obj->normal, angle);
+            obj->normal = normalize_vector(obj->normal);
+        }
+    }
+
+    return (1);
+}
+
+
+int	mouse_handler(int button, int x, int y, void *param)
+{
+	t_minirt	*minirt;
+	t_scene		*scene;
+	object_info	hit;
+	float		delta;
+	t_sphere	*s;
+	t_cylinder	*c;
+
+	if (x >= CONTROL_PANEL_WIDTH)
+	{
+		x = x - CONTROL_PANEL_WIDTH;
+		minirt = (t_minirt *)param;
+		scene = minirt->scene;
+		if (button == 1)
+		{
+			hit = object_detector(x, y, scene);
+			// Free previous allocation if it exists
+			if (scene->object_hit)
+				free(scene->object_hit);
+			scene->object_hit = malloc(sizeof(object_info));
+			scene->object_hit->intersection_point = hit.intersection_point;
+			scene->object_hit->normal = hit.normal;
+			scene->object_hit->obj = hit.obj;
+			scene->object_hit->type = hit.type;
+		}
+		if (button == 4 || button == 5)
+		{
+			if (scene->object_hit)
+			{
+				delta = (button == 4) ? 0.1f : -0.1f;
+				if (scene->object_hit->type == SPHERE)
+				{
+					s = (t_sphere *)scene->object_hit->obj;
+					s->radius += delta;
+					if (s->radius < 0.1f)
+						s->radius = 0.1f;
+					fflush(stdout);
+				}
+				else if (scene->object_hit->type == CYLINDER)
+				{
+					c = (t_cylinder *)scene->object_hit->obj;
+					c->diameter += delta;
+					c->height += delta;
+					if (c->diameter < 0.1f)
+						c->diameter = 0.1f;
+					if (c->height < 0.1f)
+						c->height = 0.1f;
+				}
+				// Render the scene with the updated object
+				render_scene(*scene, minirt->mlx);
+				mlx_put_image_to_window(minirt->mlx->mlx, minirt->mlx->mlx_win,
+					minirt->mlx->img, CONTROL_PANEL_WIDTH, 0);
+			}
+		}
+	}
 	
-    return (0);
+	return (0);
 }
 
 int	key_hook(int keycode, t_minirt *minirt_struct)
@@ -216,13 +290,17 @@ int	key_hook(int keycode, t_minirt *minirt_struct)
 		translate_object(minirt_struct, LEFT);
 	if (keycode == KEY_H)
 		translate_object(minirt_struct, RIGHT);
-	
-	if (keycode == KEY_R)
-		rotate_object(minirt_struct);
+
+	if (keycode == KEY_J)
+		rotate_object(minirt_struct, X);
+	if (keycode == KEY_K)
+		rotate_object(minirt_struct, Y);
+	if (keycode == KEY_L)
+		rotate_object(minirt_struct, Z);
 	// Re-render scene and update window
 	render_scene(*minirt_struct->scene, minirt_struct->mlx);
 	mlx_put_image_to_window(minirt_struct->mlx->mlx,
-		minirt_struct->mlx->mlx_win, minirt_struct->mlx->img, 0, 0);
+		minirt_struct->mlx->mlx_win, minirt_struct->mlx->img, CONTROL_PANEL_WIDTH, 0);
 
 	return (0);
 }

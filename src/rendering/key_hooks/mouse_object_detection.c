@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:09:46 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/19 16:40:10 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 20:38:45 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,5 @@ object_info	object_detector(int i , int j ,t_scene *scene)
 		cylinder = cylinder->next;
 	}
 	
-	if (closest_t < INFINITY)
-	{
-		printf("object detected is %d", obj.type);
-	}
 	return obj;
 }

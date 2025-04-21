@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:35:13 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 14:17:01 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 19:33:48 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <math.h>
 # define WIDTH 800
 # define HEIGHT 600
+#define CONTROL_PANEL_WIDTH 200
 
 // Forward declare t_minirt here
 typedef struct s_minirt t_minirt;
@@ -121,7 +122,7 @@ typedef struct s_mlx {
 
 void put_pixel(t_mlx *mlx, int x, int y, int color) ;
 // Function prototypes
-void	win_init(t_minirt *minirt_struct);
+void	win_init(t_minirt *minirt_struct, int total_width);
 int 	close_window(t_minirt *minirt_struct);
 int 	key_hook(int keycode, t_minirt *minirt_struct);
 
