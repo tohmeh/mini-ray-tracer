@@ -50,6 +50,8 @@ SRCS = \
 	$(SRC_DIR)/parsing/validation/validate_range.c \
 	$(SRC_DIR)/parsing/validation/validate_ratio.c \
 	$(SRC_DIR)/parsing/parse_element.c \
+	$(SRC_DIR)/parsing/parse_element_utils.c \
+	$(SRC_DIR)/rendering/rendering_related/intersections.c \
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   put_pixels.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gakhoury <gakhoury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:52:39 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 17:34:45 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 21:39:04 by gakhoury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/miniRT.h"
 
-void put_pixel(t_mlx *mlx, int x, int y, int color) {
-    char *dst;
+void	put_pixel(t_mlx *mlx, int x, int y, int color)
+{
+	char	*dst;
 
-    if (x < 0 || x >= WIDTH + CONTROL_PANEL_WIDTH || y < 0 || y >= HEIGHT)
-        return;
-    dst = mlx->img_ptr + (y * mlx->line_len + x * (mlx->bpp / 8));
+	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
+		return ;
+	dst = mlx->img_ptr + (y * mlx->line_len + x * (mlx->bpp / 8));
 	*(unsigned int *)dst = color;
 }

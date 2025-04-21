@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:45:03 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 20:42:05 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 21:48:40 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@
 #define KEY_K 107
 #define KEY_L 108
 
-typedef enum DIRECTIONS
+typedef enum e_directions
 {
 	UP,
 	DOWN,
 	LEFT,
 	RIGHT
-}	DIRECTIONS;
+}				t_directions;
 
 typedef enum AXIS
 {
@@ -51,20 +51,13 @@ int	close_window(t_minirt *minirt_struct)
 	return (0);
 }
 
-int	translate_object(t_minirt *minirt, DIRECTIONS direction)
+static t_vector	get_translation_delta(t_directions direction, float move_step)
 {
-	t_scene		*scene;
-	t_sphere	*s;
-	t_cylinder	*c;
-	float		move_step;
-	t_plane		*p;
+	t_vector	delta;
 
-	scene = minirt->scene;
-	t_vector delta = {0, 0, 0};
-	move_step = 0.2f;
-	if (!scene->object_hit)
-		return (0);
-	// Set direction vector
+	delta.x = 0;
+	delta.y = 0;
+	delta.z = 0;
 	if (direction == UP)
 		delta.z = move_step;
 	else if (direction == DOWN)
@@ -73,21 +66,41 @@ int	translate_object(t_minirt *minirt, DIRECTIONS direction)
 		delta.x = -move_step;
 	else if (direction == RIGHT)
 		delta.x = move_step;
+	return (delta);
+}
+
+static void	translate_sphere(t_sphere *s, t_vector delta)
+{
+	s->center = add_vectors(s->center, delta);
+}
+
+static void	translate_cylinder(t_cylinder *c, t_vector delta)
+{
+	c->center = add_vectors(c->center, delta);
+}
+
+static void	translate_plane(t_plane *p, t_vector delta)
+{
+	p->point = add_vectors(p->point, delta);
+}
+
+int	translate_object(t_minirt *minirt, t_directions direction)
+{
+	t_scene		*scene;
+	t_vector	delta;
+	float		move_step;
+
+	scene = minirt->scene;
+	move_step = 0.2f;
+	if (!scene->object_hit)
+		return (0);
+	delta = get_translation_delta(direction, move_step);
 	if (scene->object_hit->type == SPHERE)
-	{
-		s = (t_sphere *)scene->object_hit->obj;
-		s->center = add_vectors(s->center, delta);
-	}
+		translate_sphere((t_sphere *)scene->object_hit->obj, delta);
 	else if (scene->object_hit->type == CYLINDER)
-	{
-		c = (t_cylinder *)scene->object_hit->obj;
-		c->center = add_vectors(c->center, delta);
-	}
+		translate_cylinder((t_cylinder *)scene->object_hit->obj, delta);
 	else if (scene->object_hit->type == PLANE)
-	{
-		p = (t_plane *)scene->object_hit->obj;
-		p->point = add_vectors(p->point, delta);
-	}
+		translate_plane((t_plane *)scene->object_hit->obj, delta);
 	return (1);
 }
 t_vector rotate_vector_z(t_vector v, float angle)
@@ -235,72 +248,80 @@ int	mouse_handler(int button, int x, int y, void *param)
 	return (0);
 }
 
-int	key_hook(int keycode, t_minirt *minirt_struct)
+static void	handle_exit_key(int key, t_minirt *rt)
 {
-	float move_speed = 0.5;
-	float rotation_speed = 0.05; // Radians, adjust as needed
-	t_camera *cam = minirt_struct->scene->camera;
+	if (key == KEY_ESC)
+		close_window(rt);
+}
 
-	if (!minirt_struct || !minirt_struct->scene)
+static void	handle_movement_key(int key, t_camera *cam, float speed)
+{
+	t_vector	right;
+
+	if (key == KEY_W)
+		move_camera(cam, cam->direction, speed);
+	else if (key == KEY_S)
+		move_camera(cam, multiply_vector_by_scalar(cam->direction, -1), speed);
+	else if (key == KEY_A || key == KEY_D)
+	{
+		right = compute_right_vector(cam->direction);
+		if (key == KEY_A)
+			move_camera(cam, multiply_vector_by_scalar(right, -1), speed);
+		else
+			move_camera(cam, right, speed);
+	}
+}
+
+static void	handle_camera_rotation_key(int key, t_camera *cam, float speed)
+{
+	if (key == KEY_LEFT)
+		rotate_camera_y(cam, speed);
+	else if (key == KEY_RIGHT)
+		rotate_camera_y(cam, -speed);
+	else if (key == KEY_UP)
+		rotate_camera_x(cam, -speed);
+	else if (key == KEY_DOWN)
+		rotate_camera_x(cam, speed);
+}
+
+static void	handle_translation_key(int key, t_minirt *rt)
+{
+	if (key == KEY_T)
+		translate_object(rt, UP);
+	else if (key == KEY_G)
+		translate_object(rt, DOWN);
+	else if (key == KEY_F)
+		translate_object(rt, LEFT);
+	else if (key == KEY_H)
+		translate_object(rt, RIGHT);
+}
+void	handle_object_rotation_key(int keycode, t_minirt *minirt)
+{
+	if (keycode == KEY_J)
+		rotate_object(minirt, X);
+	else if (keycode == KEY_K)
+		rotate_object(minirt, Y);
+	else if (keycode == KEY_L)
+		rotate_object(minirt, Z);
+}
+int	key_hook(int keycode, t_minirt *rt)
+{
+	const float	move_speed = 0.5f;
+	const float	rotation_speed = 0.05f;
+	t_camera	*cam;
+
+	if (!rt || !rt->scene)
 	{
 		printf("Error: miniRT struct or scene not initialized\n");
 		return (0);
 	}
-
-	if (keycode == KEY_ESC)
-		close_window(minirt_struct);
-
-	// Movement controls (WASD)
-	if (keycode == KEY_W) // Move forward
-		move_camera(cam, cam->direction, move_speed);
-
-	if (keycode == KEY_S) // Move backward
-		move_camera(cam, multiply_vector_by_scalar(cam->direction, -1),
-			move_speed);
-
-	if (keycode == KEY_A)
-	{ // Move left
-		t_vector right = compute_right_vector(cam->direction);
-		move_camera(cam, multiply_vector_by_scalar(right, -1), move_speed);
-	}
-
-	if (keycode == KEY_D)
-	{ // Move right
-		t_vector right = compute_right_vector(cam->direction);
-		move_camera(cam, right, move_speed);
-	}
-
-	// View rotation controls (Arrow keys)
-	if (keycode == KEY_LEFT) // Look left
-		rotate_camera_y(cam, rotation_speed);
-
-	if (keycode == KEY_RIGHT) // Look right
-		rotate_camera_y(cam, -rotation_speed);
-
-	if (keycode == KEY_UP) // Look up
-		rotate_camera_x(cam, -rotation_speed);
-
-	if (keycode == KEY_DOWN) // Look down
-		rotate_camera_x(cam, rotation_speed);
-	if (keycode == KEY_T)
-		translate_object(minirt_struct, UP);
-	if (keycode == KEY_G)
-		translate_object(minirt_struct, DOWN);
-	if (keycode == KEY_F)
-		translate_object(minirt_struct, LEFT);
-	if (keycode == KEY_H)
-		translate_object(minirt_struct, RIGHT);
-
-	if (keycode == KEY_J)
-		rotate_object(minirt_struct, X);
-	if (keycode == KEY_K)
-		rotate_object(minirt_struct, Y);
-	if (keycode == KEY_L)
-		rotate_object(minirt_struct, Z);
-	// Re-render scene and update window
-	render_scene(*minirt_struct->scene, minirt_struct->mlx);
-	mlx_put_image_to_window(minirt_struct->mlx->mlx,
-		minirt_struct->mlx->mlx_win, minirt_struct->mlx->img, CONTROL_PANEL_WIDTH, 0);
-
+	cam = rt->scene->camera;
+	handle_exit_key(keycode, rt);
+	handle_movement_key(keycode, cam, move_speed);
+	handle_camera_rotation_key(keycode, cam, rotation_speed);
+	handle_object_rotation_key(keycode, rt);
+	handle_translation_key(keycode, rt);
+	render_scene(*rt->scene, rt->mlx);
+	mlx_put_image_to_window(rt->mlx->mlx, rt->mlx->mlx_win, rt->mlx->img, CONTROL_PANEL_WIDTH, 0);
 	return (0);
 }

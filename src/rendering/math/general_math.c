@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general_math.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gakhoury <gakhoury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 00:42:43 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/03/29 16:33:16 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 20:45:49 by gakhoury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_vector subtract_vectors(t_vector v1, t_vector v2) {
 
 t_vector multiply_vector_by_scalar(t_vector v, float scalar) {
     t_vector result;
-    result.x = v.x * scalar;
+
+	result.x = v.x * scalar;
     result.y = v.y * scalar;
     result.z = v.z * scalar;
     return result;

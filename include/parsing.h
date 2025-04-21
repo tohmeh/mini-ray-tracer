@@ -6,12 +6,14 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:35:13 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/05 13:52:46 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 21:28:34 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+
+#include "rendering.h"
 
 typedef struct s_line
 {
@@ -69,5 +71,9 @@ t_sphere			*parse_sphere(char **line_parts);
 t_plane				*parse_plane(char **line_parts);
 t_cylinder			*parse_cylinder(char **line_parts);
 t_scene				parse_elements(char *filename);
+void				free_lines(t_line *head);
+int					open_file(const char *filename);
+t_line				*init_line(const char *content);
+t_line				*get_all_lines(int fd);
 
 #endif

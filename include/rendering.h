@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:35:13 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 19:33:48 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/21 22:11:23 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define WIDTH 800
 # define HEIGHT 600
 #define CONTROL_PANEL_WIDTH 200
+
+
 
 // Forward declare t_minirt here
 typedef struct s_minirt t_minirt;
@@ -118,7 +120,24 @@ typedef struct s_mlx {
     int endian;
 } t_mlx;
 
-
+typedef struct s_hit_info
+{
+	t_vector			point;
+	t_vector			normal;
+	t_color				color;
+}						t_hit_info;
+typedef struct s_light_contrib
+{
+	int		ambient_r;
+	int		ambient_g;
+	int		ambient_b;
+	int		diffuse_r;
+	int		diffuse_g;
+	int		diffuse_b;
+	int		final_r;
+	int		final_g;
+	int		final_b;
+}			t_light_contrib;
 
 void put_pixel(t_mlx *mlx, int x, int y, int color) ;
 // Function prototypes
@@ -163,5 +182,7 @@ void rotate_camera_y(t_camera *camera, float angle);
 void rotate_camera_x(t_camera *camera, float angle);
 object_info	object_detector(int i , int j ,t_scene *scene);
 int mouse_handler(int button, int x, int y, void *param);
-
+int                     find_closest_intersection(t_ray ray, t_scene scene,
+	float *closest_t, t_hit_info *hit);
+	
 #endif
