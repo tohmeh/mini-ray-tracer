@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 23:31:53 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 19:36:51 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/24 19:27:02 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,46 +152,51 @@ void draw_control_panel(t_mlx *mlx)
 
 
 
-int main(void)
+int main(int argc, char **argv)
 {
     t_minirt	minirt;
     t_scene		scene;
     
-    // Adjust window size to accommodate control panel
-    int total_width = WIDTH + CONTROL_PANEL_WIDTH;
-    
-    // Initialize window with new width
-	win_init(&minirt, total_width);
-    
-    scene = parse_elements("render.rt");
-    if (!scene.camera || !scene.ambient) {
-        fprintf(stderr, "Invalid scene setup.\n");
-        return (1);
-    }
-    
-    minirt.scene = &scene;
-    // Initialize object_hit to NULL
-    scene.object_hit = NULL;
-    
-    // Initial render
-    mlx_put_image_to_window(minirt.mlx->mlx, minirt.mlx->mlx_win, minirt.mlx->img, CONTROL_PANEL_WIDTH, 0);
 
-	draw_control_panel(minirt.mlx);
-    render_scene(scene, minirt.mlx);
+	if (argc == 2 && )
+	{
+		// Adjust window size to accommodate control panel
+		int total_width = WIDTH + CONTROL_PANEL_WIDTH;
     
-    mlx_mouse_hook(minirt.mlx->mlx_win, mouse_handler, &minirt);
-    mlx_key_hook(minirt.mlx->mlx_win, key_hook, &minirt);
-    mlx_hook(minirt.mlx->mlx_win, 17, 0, close_window, &minirt); 
+		// Initialize window with new width
+		win_init(&minirt, total_width);
+		
+		scene = parse_elements("render.rt");
+		if (!scene.camera || !scene.ambient) {
+			fprintf(stderr, "Invalid scene setup.\n");
+			return (1);
+		}
+		
+		minirt.scene = &scene;
+		// Initialize object_hit to NULL
+		scene.object_hit = NULL;
+		
+		// Initial render
+		mlx_put_image_to_window(minirt.mlx->mlx, minirt.mlx->mlx_win, minirt.mlx->img, CONTROL_PANEL_WIDTH, 0);
+	
+		draw_control_panel(minirt.mlx);
+		render_scene(scene, minirt.mlx);
+		
+		mlx_mouse_hook(minirt.mlx->mlx_win, mouse_handler, &minirt);
+		mlx_key_hook(minirt.mlx->mlx_win, key_hook, &minirt);
+		mlx_hook(minirt.mlx->mlx_win, 17, 0, close_window, &minirt); 
+		
+		mlx_loop(minirt.mlx->mlx);
+		
+		// Free resources
+		if (scene.object_hit)
+			free(scene.object_hit);
+		free(scene.spheres);
+		free(scene.planes);
+		free(scene.cylinders);
+		free(scene.lights);
+		
+		return 0;	
+	}
     
-    mlx_loop(minirt.mlx->mlx);
-    
-    // Free resources
-    if (scene.object_hit)
-        free(scene.object_hit);
-    free(scene.spheres);
-    free(scene.planes);
-    free(scene.cylinders);
-    free(scene.lights);
-    
-    return 0;
 }
