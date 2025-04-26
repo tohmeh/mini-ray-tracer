@@ -14,8 +14,10 @@ MINILIBX = $(MINILIBX_DIR)/libmlx.a
 
 SRCS = \
 	$(SRC_DIR)/main.c \
+	$(SRC_DIR)/main_utils.c \
 	$(SRC_DIR)/rendering/math/cylinder_math.c \
 	$(SRC_DIR)/rendering/math/cylinder_math_utils.c \
+	$(SRC_DIR)/rendering/rendering_related/lighting_utils.c \
 	$(SRC_DIR)/rendering/math/general_math.c \
 	$(SRC_DIR)/rendering/math/plane_math.c \
 	$(SRC_DIR)/rendering/math/ray_math.c \
@@ -60,6 +62,7 @@ SRCS = \
 	$(SRC_DIR)/rendering/hooks/key_hooks.c \
 	$(SRC_DIR)/rendering/hooks/mouse_hooks.c \
 	$(SRC_DIR)/rendering/math/general_math2.c \
+	$(SRC_DIR)/rendering/rendering_related/left_panel.c \
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gakhoury <gakhoury@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 21:18:16 by gakhoury          #+#    #+#             */
-/*   Updated: 2025/04/21 21:34:48 by gakhoury         ###   ########.fr       */
+/*   Updated: 2025/04/26 17:54:54 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static void	check_sphere_intersection(t_ray ray, t_sphere *sphere,
 
 	while (sphere)
 	{
-		t_sphere = compute_sphere_intersection(ray.D, sphere->center, ray.b,
+		t_sphere = compute_sphere_intersection(ray.d, sphere->center, ray.b,
 				sphere->radius);
 		if (t_sphere > 0 && t_sphere < *closest_t)
 		{
 			*closest_t = t_sphere;
-			hit->point = add_vectors(ray.b, multiply_vector_by_scalar(ray.D,
+			hit->point = add_vectors(ray.b, multiply_vector_by_scalar(ray.d,
 						t_sphere));
 			hit->normal = sphere_normal_vector(*sphere, hit->point);
 			hit->color = sphere->color;
@@ -41,12 +41,12 @@ static void	check_plane_intersection(t_ray ray, t_plane *plane,
 
 	while (plane)
 	{
-		t_plane = compute_plane_intersection(plane->normal, plane->point, ray.D,
+		t_plane = compute_plane_intersection(plane->normal, plane->point, ray.d,
 				ray.b);
 		if (t_plane > 0 && t_plane < *closest_t)
 		{
 			*closest_t = t_plane;
-			hit->point = add_vectors(ray.b, multiply_vector_by_scalar(ray.D,
+			hit->point = add_vectors(ray.b, multiply_vector_by_scalar(ray.d,
 						t_plane));
 			hit->normal = plane_normal_vector(*plane);
 			hit->color = plane->color;
@@ -67,7 +67,7 @@ static void	check_cylinder_intersection(t_ray ray, t_cylinder *cylinder,
 		if (t_cylinder > 0 && t_cylinder < *closest_t)
 		{
 			*closest_t = t_cylinder;
-			hit->point = add_vectors(ray.b, multiply_vector_by_scalar(ray.D,
+			hit->point = add_vectors(ray.b, multiply_vector_by_scalar(ray.d,
 						t_cylinder));
 			hit->normal = cylinder_normal_vector(*cylinder, hit->point);
 			hit->color = cylinder->color;

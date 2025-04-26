@@ -6,13 +6,13 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:35:53 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 16:21:53 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/26 19:08:42 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/miniRT.h"
 
-t_vector	rotate_vector(t_vector v, float angle, AXIS axis)
+t_vector	rotate_vector(t_vector v, float angle, t_axis axis)
 {
 	t_vector	result;
 
@@ -37,7 +37,7 @@ t_vector	rotate_vector(t_vector v, float angle, AXIS axis)
 	return (result);
 }
 
-int	rotate_object(t_minirt *minirt, AXIS axe)
+int	rotate_object(t_minirt *minirt, t_axis axe)
 {
 	t_scene		*scene;
 	t_cylinder	*cyl;

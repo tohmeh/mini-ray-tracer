@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gakhoury <gakhoury@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 01:08:40 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 21:45:46 by gakhoury         ###   ########.fr       */
+/*   Updated: 2025/04/26 17:44:27 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	calculate_light_contribution(t_light *light, t_hit_info hit,
 
 	diffuse = compute_diffuse_light(hit.normal, light->position, hit.point);
 	specular = compute_specular_light(hit.normal, light->position, hit.point,
-			camera->position, 16.0f);
+			camera->position);
 	light_distance = vector_length(subtract_vectors(light->position,
 				hit.point));
 	attenuation = 1.0 / (1.0 + 0.01 * light_distance + 0.001 * light_distance

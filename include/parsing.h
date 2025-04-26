@@ -6,14 +6,14 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:35:13 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 21:28:34 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/26 17:49:16 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-#include "rendering.h"
+# include "rendering.h"
 
 typedef struct s_line
 {

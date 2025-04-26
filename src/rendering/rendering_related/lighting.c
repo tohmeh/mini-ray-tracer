@@ -6,7 +6,7 @@
 /*   By: gakhoury <gakhoury@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:35:20 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 22:00:55 by gakhoury         ###   ########.fr       */
+/*   Updated: 2025/04/26 16:52:09 by gakhoury         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ float	compute_diffuse_light(t_vector normal, t_vector light_pos,
 }
 
 float	compute_specular_light(t_vector normal, t_vector light_pos,
-		t_vector intersection_point, t_vector camera_pos, float shininess)
+		t_vector intersection_point, t_vector camera_pos)
 {
 	t_vector	light_dir;
 	t_vector	view_dir;
@@ -65,68 +65,8 @@ float	compute_specular_light(t_vector normal, t_vector light_pos,
 				intersection_point));
 	reflect_dir = subtract_vectors(multiply_vector_by_scalar(normal, 2.0f
 				* dot_product(normal, light_dir)), light_dir);
-	spec = powf(fmax(dot_product(reflect_dir, view_dir), 0.0), shininess);
+	spec = powf(fmax(dot_product(reflect_dir, view_dir), 0.0), 16.0f);
 	return (spec);
-}
-
-int	is_sphere_in_shadow(t_ray shadow_ray, float light_distance, t_scene scene)
-{
-	float		t;
-	t_sphere	*sphere;
-
-	sphere = scene.spheres;
-	while (sphere)
-	{
-		t = compute_sphere_intersection(shadow_ray.D, sphere->center,
-				shadow_ray.b, sphere->radius);
-		if (t > 0 && t < light_distance)
-			return (1);
-		sphere = sphere->next;
-	}
-	return (0);
-}
-
-int	is_plane_in_shadow(t_ray shadow_ray, float light_distance, t_scene scene)
-{
-	float	t;
-	t_plane	*plane;
-
-	plane = scene.planes;
-	while (plane)
-	{
-		t = compute_plane_intersection(plane->normal, plane->point,
-				shadow_ray.D, shadow_ray.b);
-		if (t > 0 && t < light_distance)
-			return (1);
-		plane = plane->next;
-	}
-	return (0);
-}
-
-int	is_cylinder_in_shadow(t_ray shadow_ray, float light_distance, t_scene scene)
-{
-	float		t;
-	t_cylinder	*cylinder;
-
-	cylinder = scene.cylinders;
-	while (cylinder)
-	{
-		t = compute_cylinder_intersection(shadow_ray, *cylinder);
-		if (t > 0 && t < light_distance)
-			return (1);
-		cylinder = cylinder->next;
-	}
-	return (0);
-}
-
-t_ray	create_shadow_ray(t_vector intersection_point, t_vector light_dir)
-{
-	t_ray	shadow_ray;
-
-	shadow_ray.b = add_vectors(intersection_point,
-			multiply_vector_by_scalar(light_dir, 0.001));
-	shadow_ray.D = light_dir;
-	return (shadow_ray);
 }
 
 int	in_shadow(t_vector intersection_point, t_light *light, t_scene scene)

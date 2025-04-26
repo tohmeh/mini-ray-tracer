@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:54:37 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 15:55:35 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/26 17:59:03 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_vector	get_translation_delta(t_directions direction, float move_step)
 	return (delta);
 }
 
-static void	translate_object_by_type(object_info *obj, t_vector delta)
+static void	translate_object_by_type(t_object_info *obj, t_vector delta)
 {
 	if (obj->type == SPHERE)
 		((t_sphere *)obj->obj)->center

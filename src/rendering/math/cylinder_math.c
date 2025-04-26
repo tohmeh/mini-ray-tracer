@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 22:00:00 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 17:06:00 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/26 17:54:54 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ float	compute_cylinder_intersection(t_ray ray, t_cylinder cyl)
 	ca = normalize_vector(cyl.axis);
 	oc = subtract_vectors(ray.b, cyl.center);
 	radius = cyl.diameter * 0.5f;
-	t = solve_cylinder_quadratic(get_cylinder_projection(ray.D, ca),
+	t = solve_cylinder_quadratic(get_cylinder_projection(ray.d, ca),
 			get_cylinder_projection(oc, ca), radius);
 	if (t < 0)
 		return (-1.0f);
 	if (!is_within_cylinder_height(add_vectors(ray.b,
-				multiply_vector_by_scalar(ray.D, t)), cyl, ca))
+				multiply_vector_by_scalar(ray.d, t)), cyl, ca))
 		return (-1.0f);
 	return (t);
 }
