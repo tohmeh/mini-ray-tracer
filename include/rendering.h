@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:35:13 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 22:11:23 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/26 17:06:16 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,39 @@ typedef struct s_light_contrib
 	int		final_b;
 }			t_light_contrib;
 
+#define KEY_W 119
+#define KEY_A 97
+#define KEY_S 115
+#define KEY_D 100
+#define KEY_UP 65362
+#define KEY_DOWN 65364
+#define KEY_LEFT 65361
+#define KEY_RIGHT 65363
+#define KEY_ESC 65307
+#define KEY_T 116
+#define KEY_F 102
+#define KEY_G 103
+#define KEY_H 104
+#define KEY_R 114
+#define KEY_J 106
+#define KEY_K 107
+#define KEY_L 108
+
+typedef enum e_directions
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+}				t_directions;
+
+typedef enum AXIS
+{
+	X,
+	Y,
+	Z
+}	AXIS;
+
 void put_pixel(t_mlx *mlx, int x, int y, int color) ;
 // Function prototypes
 void	win_init(t_minirt *minirt_struct, int total_width);
@@ -183,6 +216,17 @@ void rotate_camera_x(t_camera *camera, float angle);
 object_info	object_detector(int i , int j ,t_scene *scene);
 int mouse_handler(int button, int x, int y, void *param);
 int                     find_closest_intersection(t_ray ray, t_scene scene,
-	float *closest_t, t_hit_info *hit);
-	
+		float *closest_t, t_hit_info *hit);
+void	handle_camera_rotation_key(int key, t_camera *cam, float speed);
+void	handle_object_rotation_key(int keycode, t_minirt *minirt);
+void	handle_translation_key(int key, t_minirt *rt);
+void	handle_exit_key(int key, t_minirt *rt);
+void	handle_movement_key(int key, t_camera *cam, float speed);
+void	resize_object(t_scene *scene, float delta);
+void	handle_object_detection(int x, int y, t_scene *scene);
+int	mouse_handler(int button, int x, int y, void *param);
+t_vector	get_cylinder_projection(t_vector v, t_vector axis);
+int	solve_quadratic(t_vector t
+	, float *t1, float *t2);
+
 #endif

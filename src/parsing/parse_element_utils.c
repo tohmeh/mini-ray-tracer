@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 21:20:48 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 21:28:58 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:56:10 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,32 +56,41 @@ t_line	*init_line(const char *content)
 	return (new_node);
 }
 
+static int	create_and_link_line(t_line **head, t_line **current,
+		char *line_content)
+{
+	t_line	*new_node;
+
+	if (!line_content || (!line_content[0] && line_content[0] != '\n'))
+		return (0);
+	new_node = init_line(line_content);
+	if (!new_node)
+	{
+		free_lines(*head);
+		return (-1);
+	}
+	if (!*head)
+		*head = new_node;
+	else
+		(*current)->next = new_node;
+	*current = new_node;
+	return (0);
+}
+
 t_line	*get_all_lines(int fd)
 {
 	t_line	*head;
 	t_line	*current;
 	char	*line_content;
-	t_line	*new_node;
 
 	head = NULL;
 	current = NULL;
 	line_content = get_next_line(fd);
-	while (line_content != NULL)
+	while (line_content)
 	{
-		if (line_content != NULL || line_content[0] || '\n')
-			new_node = init_line(line_content);
-		else
-			continue ;
-		if (!new_node)
-		{
-			free_lines(head);
+		if (create_and_link_line(&head, &current, line_content) == -1)
 			return (NULL);
-		}
-		if (!head)
-			head = new_node;
-		else
-			current->next = new_node;
-		current = new_node;
+		free(line_content);
 		line_content = get_next_line(fd);
 	}
 	return (head);

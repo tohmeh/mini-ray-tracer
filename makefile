@@ -14,8 +14,8 @@ MINILIBX = $(MINILIBX_DIR)/libmlx.a
 
 SRCS = \
 	$(SRC_DIR)/main.c \
-	$(SRC_DIR)/rendering/key_hooks/hooks.c \
 	$(SRC_DIR)/rendering/math/cylinder_math.c \
+	$(SRC_DIR)/rendering/math/cylinder_math_utils.c \
 	$(SRC_DIR)/rendering/math/general_math.c \
 	$(SRC_DIR)/rendering/math/plane_math.c \
 	$(SRC_DIR)/rendering/math/ray_math.c \
@@ -25,8 +25,7 @@ SRCS = \
 	$(SRC_DIR)/rendering/rendering_related/wind_init.c \
 	$(SRC_DIR)/rendering/rendering_related/lighting.c \
 	$(SRC_DIR)/rendering/math/normal_vector_math.c \
-	$(SRC_DIR)/rendering/key_hooks/triggers.c \
-	$(SRC_DIR)/rendering/key_hooks/mouse_object_detection.c \
+	$(SRC_DIR)/rendering/hooks/mouse_object_detection.c \
 	$(SRC_DIR)/parsing/getters/getters.c \
 	$(SRC_DIR)/parsing/services/ambient_service.c \
 	$(SRC_DIR)/parsing/services/camera_service.c \
@@ -52,6 +51,15 @@ SRCS = \
 	$(SRC_DIR)/parsing/parse_element.c \
 	$(SRC_DIR)/parsing/parse_element_utils.c \
 	$(SRC_DIR)/rendering/rendering_related/intersections.c \
+	$(SRC_DIR)/rendering/hooks/camera_rotation.c \
+	$(SRC_DIR)/rendering/hooks/camera_translation.c \
+	$(SRC_DIR)/rendering/hooks/object_translation.c \
+	$(SRC_DIR)/rendering/hooks/object_rotation.c \
+	$(SRC_DIR)/rendering/hooks/exit.c \
+	$(SRC_DIR)/rendering/hooks/objects_resize.c \
+	$(SRC_DIR)/rendering/hooks/key_hooks.c \
+	$(SRC_DIR)/rendering/hooks/mouse_hooks.c \
+	$(SRC_DIR)/rendering/math/general_math2.c \
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
