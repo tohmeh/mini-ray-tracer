@@ -63,6 +63,8 @@ SRCS = \
 	$(SRC_DIR)/rendering/hooks/mouse_hooks.c \
 	$(SRC_DIR)/rendering/math/general_math2.c \
 	$(SRC_DIR)/rendering/rendering_related/left_panel.c \
+	$(SRC_DIR)/cleaners/cleaner.c \
+	$(SRC_DIR)/cleaners/cleaner_utils.c \
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

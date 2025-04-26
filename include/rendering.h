@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:35:13 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 19:08:48 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/26 20:05:32 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,22 @@ typedef struct s_minirt	t_minirt;
 
 typedef struct s_vector
 {
-	float	x;
-	float	y;
-	float	z;
+	float				x;
+	float				y;
+	float				z;
 }						t_vector;
 
 typedef struct s_ray
 {
-	t_vector	b;
-	t_vector	d;
+	t_vector			b;
+	t_vector			d;
 }						t_ray;
 
 typedef struct s_color
 {
-	int	r;
-	int	g;
-	int	b;
+	int					r;
+	int					g;
+	int					b;
 }						t_color;
 
 typedef struct s_sphere
@@ -93,7 +93,7 @@ typedef enum t_object_type
 	SPHERE,
 	CYLINDER,
 	PLANE,
-}	t_object_type;
+}						t_object_type;
 
 typedef struct t_object_info
 {
@@ -175,7 +175,7 @@ typedef enum t_axis
 	X,
 	Y,
 	Z
-}	t_axis;
+}						t_axis;
 
 void					put_pixel(t_mlx *mlx, int x, int y, int color);
 // Function prototypes
@@ -260,5 +260,8 @@ int						is_plane_in_shadow(t_ray shadow_ray,
 							float light_distance, t_scene scene);
 int						is_cylinder_in_shadow(t_ray shadow_ray,
 							float light_distance, t_scene scene);
+void					free_minirt(t_minirt *minirt);
+void					free_scene(t_scene *scene);
+void					free_split(char **split);
 
 #endif

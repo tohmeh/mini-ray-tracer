@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 18:16:16 by gakhoury          #+#    #+#             */
-/*   Updated: 2025/04/21 21:21:24 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/26 20:05:22 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	parse_element(char *line, t_scene *scene)
 		perror("invalid object");
 		exit(0);
 	}
+	free_split(line_parts);
 	return (0);
 }
 
@@ -68,5 +69,6 @@ t_scene	parse_elements(char *filename)
 		parse_element(temp->content, &scene);
 		temp = temp->next;
 	}
+	free_lines(head_of_elements);
 	return (scene);
 }

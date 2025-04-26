@@ -6,13 +6,13 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 21:20:48 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 14:56:10 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/26 20:03:10 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/miniRT.h"
 
-void	free_lines(t_line *head)
+void	free_lst(t_line *head)
 {
 	t_line	*tmp;
 

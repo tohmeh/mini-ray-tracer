@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 23:31:53 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 17:45:02 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/04/26 19:48:53 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, char **argv)
 		draw_instruction_panel(minirt.mlx);
 		setup_hooks(minirt);
 		mlx_loop(minirt.mlx->mlx);
+		free_minirt(&minirt);
 	}
 	else
 		printf("usage: ./miniRT filename.rt\n");
