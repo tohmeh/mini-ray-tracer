@@ -81,12 +81,26 @@ typedef struct s_ambient
 	t_color				color;
 }						t_ambient;
 
+typedef struct s_camera_params
+{
+    float       fov_tan_half;       // tan(fov / 2)
+    t_vector    right_vector;       // Right vector (cached)
+    t_vector    up_vector;          // Up vector (cached)
+    float       aspect_ratio;       // WIDTH/HEIGHT (cached)
+    float       inv_width;          // 1.0/WIDTH (cached)
+    float       inv_height;         // 1.0/HEIGHT (cached)
+    // For common pixel calculations
+    float       pixel_dx;           // 2 * aspect_ratio * fov_tan_half / WIDTH
+    float       pixel_dy;           // 2 * fov_tan_half / HEIGHT
+}               t_camera_params;
+
 typedef struct s_camera
 {
-	t_vector			position;
-	t_vector			direction;
-	float				fov;
-}						t_camera;
+    t_vector position;
+    t_vector direction;
+    float fov;
+    t_camera_params params; // Cache for the camera parameters
+}               t_camera;
 typedef enum t_object_type
 {
 	NOTHING,
@@ -177,6 +191,9 @@ typedef enum t_axis
 	Z
 }						t_axis;
 
+
+
+
 void					put_pixel(t_mlx *mlx, int x, int y, int color);
 // Function prototypes
 void					win_init(t_minirt *minirt_struct, int total_width);
@@ -263,5 +280,7 @@ int						is_cylinder_in_shadow(t_ray shadow_ray,
 void					free_minirt(t_minirt *minirt);
 void					free_scene(t_scene *scene);
 void					free_split(char **split);
+void update_camera_params(t_camera *camera);
+
 
 #endif

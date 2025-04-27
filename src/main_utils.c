@@ -29,6 +29,8 @@ int	program_init(t_minirt *minirt, char *filename)
 	scene->object_hit = NULL;
 	minirt->scene = scene;
 	render_scene(*minirt->scene, minirt->mlx);
+	mlx_put_image_to_window(minirt->mlx->mlx, minirt->mlx->mlx_win, minirt->mlx->img,
+		CONTROL_PANEL_WIDTH, 0);
 	return (1);
 }
 

@@ -52,7 +52,7 @@ void				set_camera(t_scene *scene, t_camera *camera);
 void				error_exit(const char *msg);
 t_color				init_color(int r, int g, int b);
 t_ambient			*init_ambient(float ratio, t_color color);
-float				ft_atof(const char *str);
+float				(const char *str);
 int					ft_is_number(const char *str);
 int					ft_is_integer(const char *str);
 int					ft_is_float(const char *str);

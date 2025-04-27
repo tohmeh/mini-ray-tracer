@@ -18,6 +18,8 @@ void	move_camera(t_camera *camera, t_vector direction, float distance)
 
 	movement = multiply_vector_by_scalar(direction, distance);
 	camera->position = add_vectors(camera->position, movement);
+	update_camera_params(camera); // Recompute only when moving
+
 }
 
 t_vector	compute_right_vector(t_vector forward)

@@ -46,9 +46,9 @@ void	free_minirt(t_minirt *minirt)
 {
 	if (!minirt)
 		return ;
-	if (&minirt->scene)
+	if (minirt->scene)
 		free_scene(minirt->scene);
-	if (&minirt->mlx)
+	if (minirt->mlx)
 		free_mlx(minirt->mlx);
 }
 

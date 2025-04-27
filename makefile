@@ -1,16 +1,27 @@
-NAME = miniRT
+# **************************************************************************** #
+#                                  MiniRT Makefile                             #
+# **************************************************************************** #
 
-CC = gcc
-CFLAGS = -Ofast -flto -march=native -funroll-loops -fno-plt -fstrict-aliasing -Wall -Wextra -Werror -I./minilibx-linux -g
-LDFLAGS = -L./minilibx-linux -lmlx -lX11 -lXext -lm
+NAME        = miniRT
 
-LIBFT_DIR = LIBFT
-MINILIBX_DIR = minilibx-linux
-SRC_DIR = src
-OBJ_DIR = obj
+CC          = gcc
+DEBUG       = 0
 
-LIBFT = $(LIBFT_DIR)/lib/libft.a
-MINILIBX = $(MINILIBX_DIR)/libmlx.a
+ifeq ($(DEBUG), 1)
+    CFLAGS  = -g -Wall -Wextra -Werror -I./minilibx-linux
+else
+    CFLAGS  = -pg -Ofast -flto -march=native -funroll-loops -fno-plt -fstrict-aliasing -Wall -Wextra -Werror -I./minilibx-linux -g
+endif
+
+LDFLAGS     = -L./minilibx-linux -lmlx -lX11 -lXext -lm -pg
+
+LIBFT_DIR   = LIBFT
+MINILIBX_DIR= minilibx-linux
+SRC_DIR     = src
+OBJ_DIR     = obj
+
+LIBFT       = $(LIBFT_DIR)/lib/libft.a
+MINILIBX    = $(MINILIBX_DIR)/libmlx.a
 
 SRCS = \
 	$(SRC_DIR)/main.c \
@@ -68,40 +79,42 @@ SRCS = \
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
+# ============================== RULES ============================== #
+
 all: $(NAME)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(dir $(OBJS))
 
-# Clone minilibx-linux if not already cloned
 $(MINILIBX_DIR):
 	@git clone https://github.com/42paris/minilibx-linux.git $(MINILIBX_DIR)
 
-# Compile libmlx after ensuring repo is cloned
 $(MINILIBX): | $(MINILIBX_DIR)
 	@$(MAKE) -C $(MINILIBX_DIR)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(LIBFT) $(MINILIBX) $(OBJS)
+$(NAME): $(LIBFT) $(MINILIBX) $(OBJ_DIR) $(OBJS)
 	@$(CC) $(OBJS) $(LIBFT) $(MINILIBX) $(LDFLAGS) -o $(NAME)
+	@echo "Build successful!"
 
 clean:
 	@rm -rf $(OBJ_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 	@$(MAKE) -C $(MINILIBX_DIR) clean
-	@echo "Object files removed."
+	@echo "Object files cleaned."
 
 fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@echo "Executable removed."
 
 re: fclean all
 
 .PHONY: all clean fclean re
+
