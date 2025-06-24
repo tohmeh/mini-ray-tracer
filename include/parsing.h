@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:35:13 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 17:49:16 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/24 17:49:13 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void				set_camera(t_scene *scene, t_camera *camera);
 void				error_exit(const char *msg);
 t_color				init_color(int r, int g, int b);
 t_ambient			*init_ambient(float ratio, t_color color);
-float				(const char *str);
+float				ft_atof(const char *str);
 int					ft_is_number(const char *str);
 int					ft_is_integer(const char *str);
 int					ft_is_float(const char *str);
