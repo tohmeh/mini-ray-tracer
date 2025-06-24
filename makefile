@@ -10,7 +10,7 @@ DEBUG       = 0
 ifeq ($(DEBUG), 1)
     CFLAGS  = -g -Wall -Wextra -Werror -I./minilibx-linux
 else
-    CFLAGS  = -pg -Ofast -flto -march=native -funroll-loops -fno-plt -fstrict-aliasing -Wall -Wextra -Werror -I./minilibx-linux -g
+    CFLAGS  = -Ofast -flto -march=native -funroll-loops -fno-plt -fstrict-aliasing -Wall -Wextra -Werror -I./minilibx-linux -g
 endif
 
 LDFLAGS     = -L./minilibx-linux -lmlx -lX11 -lXext -lm -pg

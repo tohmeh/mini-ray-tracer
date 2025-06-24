@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 16:25:14 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 16:25:26 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/24 18:41:05 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ int	key_hook(int keycode, t_minirt *rt)
 	handle_object_rotation_key(keycode, rt);
 	handle_translation_key(keycode, rt);
 	render_scene(*rt->scene, rt->mlx);
-	mlx_put_image_to_window(rt->mlx->mlx, rt->mlx->mlx_win, rt->mlx->img,
-		CONTROL_PANEL_WIDTH, 0);
+	if (!rt->shouldExit)
+	{
+		mlx_put_image_to_window(rt->mlx->mlx, rt->mlx->mlx_win, rt->mlx->img,
+			CONTROL_PANEL_WIDTH, 0);
+		return (0);		
+	}
 	return (0);
 }

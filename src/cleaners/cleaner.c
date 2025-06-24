@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:30:46 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 20:00:39 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/24 19:00:51 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	free_mlx(t_mlx *mlx)
 	if (mlx->img)
 		mlx_destroy_image(mlx->mlx, mlx->img);
 	if (mlx->mlx_win)
-		mlx_destroy_window(mlx->mlx, mlx->mlx_win);
+	{
+		
+		mlx_destroy_window(mlx->mlx, mlx->mlx_win);		
+	}
 	if (mlx->mlx)
 	{
 		mlx_destroy_display(mlx->mlx);
@@ -46,9 +49,9 @@ void	free_minirt(t_minirt *minirt)
 {
 	if (!minirt)
 		return ;
-	if (minirt->scene)
+	if (minirt && minirt->scene)
 		free_scene(minirt->scene);
-	if (minirt->mlx)
+	if (minirt && minirt->mlx)
 		free_mlx(minirt->mlx);
 }
 

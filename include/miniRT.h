@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:10:37 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/21 21:17:11 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/24 18:04:22 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_minirt
 {
 	t_mlx	*mlx;
 	t_scene	*scene;
+	int shouldExit;
 }			t_minirt;
 
 #endif

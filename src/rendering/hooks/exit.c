@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:50:01 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/06/24 17:52:39 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/24 19:07:05 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	handle_exit_key(int key, t_minirt *rt)
 
 int	close_window(t_minirt *minirt_struct)
 {
-	mlx_destroy_window(minirt_struct->mlx->mlx, minirt_struct->mlx->mlx_win);
-	// free_minirt(minirt_struct);
-	// exit(0);
-	return (0);
+	free_minirt(minirt_struct);
+	exit (0);
 }
