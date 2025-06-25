@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 23:31:53 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/06/24 18:51:05 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:30:29 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ int	main(int argc, char **argv)
 	if (argc == 2 && is_rt_file(argv[1]))
 	{
 		minirt.shouldExit = 0;
-		program_init(&minirt, argv[1]);
+		if (!program_init(&minirt, argv[1]))
+		{
+			return (0);
+		}
 		draw_instruction_panel(minirt.mlx);
 		setup_hooks(minirt);
 		mlx_loop(minirt.mlx->mlx);

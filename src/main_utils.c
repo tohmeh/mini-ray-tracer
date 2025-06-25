@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:04:29 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 17:26:51 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:29:50 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ int	program_init(t_minirt *minirt, char *filename)
 
 	scene = malloc(sizeof(t_scene));
 	total_width = WIDTH + CONTROL_PANEL_WIDTH;
-	win_init(minirt, total_width);
 	*scene = parse_elements(filename);
 	if (!scene->camera || !scene->ambient)
 	{
 		printf("Invalid scene setup.\n");
+		free_scene(scene);
+
 		return (0);
 	}
+	win_init(minirt, total_width);
 	scene->object_hit = NULL;
 	minirt->scene = scene;
 	render_scene(*minirt->scene, minirt->mlx);

@@ -10,10 +10,10 @@ DEBUG       = 0
 ifeq ($(DEBUG), 1)
     CFLAGS  = -g -Wall -Wextra -Werror -I./minilibx-linux
 else
-    CFLAGS  = -Ofast -flto -march=native -funroll-loops -fno-plt -fstrict-aliasing -Wall -Wextra -Werror -I./minilibx-linux -g
+    CFLAGS  = -Ofast -flto -march=native -funroll-loops -fno-plt -fstrict-aliasing -Wall -Wextra -Werror -I./minilibx-linux 
 endif
 
-LDFLAGS     = -L./minilibx-linux -lmlx -lX11 -lXext -lm -pg
+LDFLAGS     = -L./minilibx-linux -lmlx -lX11 -lXext -lm
 
 LIBFT_DIR   = LIBFT
 MINILIBX_DIR= minilibx-linux
