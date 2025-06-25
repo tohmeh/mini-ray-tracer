@@ -2,13 +2,25 @@
 
 A lightweight ray tracing implementation for 3D graphics rendering.
 
-##  Overview
+## Overview
 
 Ray tracing is a powerful rendering technique that simulates the behavior of light rays to generate photorealistic images. This project implements a small-scale ray tracer as an introduction to 3D graphics programming.
 
-<br>
-In a ray tracing program, we start with a camera, some objects, and a light source. During execution, we send rays (which are like lines) from the camera through each pixel on the screen. To do this, we use certain equations to define the direction and position of each ray. If a ray hits an object in the scene, we color that pixel using the object’s color. But how do we know if a ray hits something? Back in high school, we learned that a line intersects a function if the equation becomes solvable when we plug in values — it's similar here. Each object (like a sphere, plane, or cylinder) has its own equation. We plug the ray’s formula into the object’s equation and, after simplifying, we usually get a quadratic equation. If that equation has a solution, it means there’s an intersection. Once we render all basic objects, we apply ambient lighting — a general brightness added to all colors to simulate surrounding light. Then comes normal lighting, where we calculate how light hits the surface using the dot product between the light direction and the surface normal (which is a vector pointing out from the surface). Finally, we handle shadows by sending a ray from the intersection point to the light source. If something blocks that ray, the point is in shadow; if not, it’s lit. 
+In a ray tracing program, we start with a camera, some objects, and a light source. During execution, we send rays (which are like lines) from the camera through each pixel on the screen. To do this, we use certain equations to define the direction and position of each ray. If a ray hits an object in the scene, we color that pixel using the object’s color.
 
+But how do we know if a ray hits something? Back in high school, we learned that a line intersects a function if the equation becomes solvable when we plug in values — it's similar here. Each object (like a sphere, plane, or cylinder) has its own equation. We plug the ray’s formula into the object’s equation and, after simplifying, we usually get a quadratic equation. If that equation has a solution, it means there’s an intersection.
+
+Once we render all basic objects, we apply ambient lighting — a general brightness added to all colors to simulate surrounding light. Then comes normal lighting, where we calculate how light hits the surface using the dot product between the light direction and the surface normal (which is a vector pointing out from the surface). Finally, we handle shadows by sending a ray from the intersection point to the light source. If something blocks that ray, the point is in shadow; if not, it’s lit.
+
+## Demo
+
+![Demo](image.png)  
+*This is a sample of what the program looks like when running a scene. We can rotate and navigate through the room and resize objects as we wish.*
+
+## File Structure
+
+![File Structure](file_structure.png)  
+*This image shows the structure of the project files and directories, giving a clear idea of how the codebase is organized.*
 
 ## Conclusion
 
