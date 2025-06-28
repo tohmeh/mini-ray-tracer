@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 18:14:30 by gakhoury          #+#    #+#             */
-/*   Updated: 2025/04/05 13:55:46 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:39:10 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ static void	iterate(const char *s, char **result, char *buffer)
 	result[j] = NULL;
 }
 
+
+
 char	**ft_split_by_ws(const char *s)
 {
 	char	**result;
@@ -77,3 +79,4 @@ char	**ft_split_by_ws(const char *s)
 	iterate(s, result, buffer);
 	return (result);
 }
+

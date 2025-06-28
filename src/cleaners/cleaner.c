@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:30:46 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/06/25 14:50:40 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:53:36 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_split(char **split)
 	if (!split)
 		return ;
 	i = 0;
-	while (split[i])
+	while (split && split[i])
 	{
 		free(split[i]);
 		i++;

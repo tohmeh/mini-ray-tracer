@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 21:20:48 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/26 20:03:10 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:42:19 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,22 @@ static int	create_and_link_line(t_line **head, t_line **current,
 	*current = new_node;
 	return (0);
 }
+static int	is_delimiter(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r');
+}
+static int	is_line_empty_or_whitespace(const char *s)
+{
+	int	i = 0;
+	while (s[i])
+	{
+		if (!is_delimiter(s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 t_line	*get_all_lines(int fd)
 {
@@ -88,8 +104,11 @@ t_line	*get_all_lines(int fd)
 	line_content = get_next_line(fd);
 	while (line_content)
 	{
-		if (create_and_link_line(&head, &current, line_content) == -1)
-			return (NULL);
+		if (!is_line_empty_or_whitespace(line_content))
+		{
+			if (create_and_link_line(&head, &current, line_content) == -1)
+				return (NULL);
+		}
 		free(line_content);
 		line_content = get_next_line(fd);
 	}

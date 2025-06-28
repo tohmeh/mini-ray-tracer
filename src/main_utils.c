@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 20:04:29 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/06/25 15:29:50 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:46:47 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	program_init(t_minirt *minirt, char *filename)
 	{
 		printf("Invalid scene setup.\n");
 		free_scene(scene);
-
 		return (0);
 	}
 	win_init(minirt, total_width);

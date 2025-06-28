@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 18:16:16 by gakhoury          #+#    #+#             */
-/*   Updated: 2025/04/26 20:05:22 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2025/06/28 15:54:24 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	parse_element(char *line, t_scene *scene)
 	else
 	{
 		perror("invalid object");
+		free_scene(scene);
+		free_split(line_parts);
 		exit(0);
 	}
 	free_split(line_parts);
