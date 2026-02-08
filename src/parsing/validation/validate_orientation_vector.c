@@ -16,7 +16,7 @@ int	validate_orientation_vector(char *str)
 {
 	char	**parts;
 
-	parts = ft_split(str, ',');
+	parts = ft_split(str, ",");
 	if (parts_size(parts) != 3)
 		return (0);
 	if (ft_is_number(parts[0]) && ft_is_number(parts[1])

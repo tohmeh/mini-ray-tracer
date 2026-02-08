@@ -24,11 +24,25 @@
 # include <math.h>
 # include <stdio.h>
 
+typedef struct s_key_state
+{
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	up;
+	int	down;
+	int	left;
+	int	right;
+	int	needs_render;
+}		t_key_state;
+
 typedef struct s_minirt
 {
-	t_mlx	*mlx;
-	t_scene	*scene;
-	int shouldExit;
+	t_mlx			*mlx;
+	t_scene			*scene;
+	int				shouldExit;
+	t_key_state		keys;
 }			t_minirt;
 
 #endif

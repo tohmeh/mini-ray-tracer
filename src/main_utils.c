@@ -35,9 +35,25 @@ int	program_init(t_minirt *minirt, char *filename)
 	return (1);
 }
 
+void	init_key_state(t_key_state *keys)
+{
+	keys->w = 0;
+	keys->a = 0;
+	keys->s = 0;
+	keys->d = 0;
+	keys->up = 0;
+	keys->down = 0;
+	keys->left = 0;
+	keys->right = 0;
+	keys->needs_render = 0;
+}
+
 void	setup_hooks(t_minirt minirt)
 {
+	init_key_state(&minirt.keys);
 	mlx_mouse_hook(minirt.mlx->mlx_win, mouse_handler, &minirt);
-	mlx_key_hook(minirt.mlx->mlx_win, key_hook, &minirt);
+	mlx_hook(minirt.mlx->mlx_win, 2, 1L << 0, key_press, &minirt);
+	mlx_hook(minirt.mlx->mlx_win, 3, 1L << 1, key_release, &minirt);
 	mlx_hook(minirt.mlx->mlx_win, 17, 0, close_window, &minirt);
+	mlx_loop_hook(minirt.mlx->mlx, loop_hook, &minirt);
 }

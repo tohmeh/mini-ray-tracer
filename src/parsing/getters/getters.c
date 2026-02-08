@@ -17,7 +17,7 @@ t_color	get_color(char *str)
 	t_color	color;
 	char	**color_parts;
 
-	color_parts = ft_split(str, ',');
+	color_parts = ft_split(str, ",");
 	color = init_color(get_int(color_parts[0]), get_int(color_parts[1]),
 			get_int(color_parts[2]));
 	free_split(color_parts);
@@ -39,7 +39,7 @@ t_vector	get_vector(char *str)
 	t_vector	vector;
 	char		**vector_parts;
 
-	vector_parts = ft_split(str, ',');
+	vector_parts = ft_split(str, ",");
 	vector = init_vector(get_float(vector_parts[0]), get_float(vector_parts[1]),
 			get_float(vector_parts[2]));
 	free_split(vector_parts);

@@ -5,8 +5,6 @@ SRC_DIR = src
 OBJ_DIR = obj
 LIB_DIR = lib
 LIB_NAME = libft.a
-MLX_REPO = https://github.com/42paris/minilibx-linux.git
-MLX_DIR = minilibx-linux
 
 # List of source files
 SRCS = $(SRC_DIR)/ft_atoi.c \
@@ -39,7 +37,8 @@ SRCS = $(SRC_DIR)/ft_atoi.c \
        $(SRC_DIR)/ft_putendl_fd.c \
        $(SRC_DIR)/ft_putlnbr.c \
        $(SRC_DIR)/ft_putnbr_fd.c \
-       $(SRC_DIR)/ft_putstr_fd.c \
+	   $(SRC_DIR)/ft_putstr_fd.c \
+       $(SRC_DIR)/ft_split.c \
        $(SRC_DIR)/ft_strchr.c \
        $(SRC_DIR)/ft_strdup.c \
        $(SRC_DIR)/ft_striteri.c \
@@ -57,17 +56,15 @@ SRCS = $(SRC_DIR)/ft_atoi.c \
        $(SRC_DIR)/ft_toupper.c \
        $(SRC_DIR)/get_next_line_utils.c \
        $(SRC_DIR)/get_next_line.c \
-       $(SRC_DIR)/ft_printf.c \
-       $(SRC_DIR)/ft_split.c \
+       $(SRC_DIR)/ft_printf.c
 
 # Define object files corresponding to source files
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Rules
-all: $(LIB_NAME) clone_mlx
+all: $(LIB_NAME)
 
 $(LIB_NAME): $(OBJS)
-	mkdir -p $(LIB_DIR)
 	ar rcs $(LIB_DIR)/$(LIB_NAME) $(OBJS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
@@ -76,19 +73,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
-clone_mlx:
-	@if [ ! -d "$(MLX_DIR)" ]; then \
-		echo "Cloning MiniLibX..."; \
-		git clone $(MLX_REPO); \
-	fi
-
 clean:
 	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	rm -rf $(LIB_DIR)
-	rm -rf $(MLX_DIR)
+	rm -f $(LIB_DIR)/$(LIB_NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re clone_mlx
+.PHONY: all clean fclean re

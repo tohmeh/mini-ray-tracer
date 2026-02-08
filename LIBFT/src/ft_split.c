@@ -6,7 +6,7 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 13:16:26 by mtohmeh           #+#    #+#             */
-/*   Updated: 2025/04/05 13:55:42 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2024/08/12 10:56:26 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <string.h>
 #include <stdio.h>
 
-static int	count_words(const char *str, char c)
+static int	count_words(const char *str, const char *delimiters)
 {
 	int	i;
 	int	count;
@@ -26,19 +26,19 @@ static int	count_words(const char *str, char c)
 	count = 0;
 	while (str[i] != '\0')
 	{
-		if (inword == 0 && str[i] != c)
+		if (inword == 0 && ft_strchr(delimiters, str[i]) == NULL)
 		{
 			inword = 1;
 			count++;
 		}
-		else if (str[i] == c)
+		else if (ft_strchr(delimiters, str[i]) != NULL)
 			inword = 0;
 		i++;
 	}
 	return (count);
 }
 
-static void	iterate(const char *s, char c, char **result, char *buffer)
+void	iterate(const char *s, const char *delimit, char **result, char *buffer)
 {
 	int	i;
 	int	j;
@@ -47,9 +47,9 @@ static void	iterate(const char *s, char c, char **result, char *buffer)
 	buffer_count = 0;
 	i = -1;
 	j = 0;
-	while (++i <= ft_strlen((char *)s))
+	while (++i <= (int)strlen(s))
 	{
-		if (s[i] != c && s[i] != '\0')
+		if (ft_strchr(delimit, s[i]) == NULL && s[i] != '\0')
 			buffer[buffer_count++] = s[i];
 		else
 		{
@@ -65,12 +65,12 @@ static void	iterate(const char *s, char c, char **result, char *buffer)
 	result[j] = NULL;
 }
 
-char	**ft_split(const char *s, char c)
+char	**ft_split(const char *s, const char *delimiters)
 {
 	char	**result;
 	char	buffer[1000];
 
-	result = malloc(sizeof(char *) * (count_words(s, c) + 1));
-	iterate(s, c, result, buffer);
+	result = malloc(sizeof(char *) * (count_words(s, delimiters) + 1));
+	iterate(s, delimiters, result, buffer);
 	return (result);
 }

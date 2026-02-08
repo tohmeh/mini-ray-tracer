@@ -6,15 +6,15 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:26:19 by mtohmeh           #+#    #+#             */
-/*   Updated: 2024/08/22 18:50:17 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2024/08/12 11:03:50 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/LIBFT.h"
 
-t_void_list	*ft_lstlast(t_void_list *lst)
+t_voidlst	*ft_lstlast(t_voidlst *lst)
 {
-	t_void_list	*temp;
+	t_voidlst	*temp;
 
 	temp = lst;
 	if (temp == NULL)

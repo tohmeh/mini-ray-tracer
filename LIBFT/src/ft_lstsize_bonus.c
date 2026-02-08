@@ -6,15 +6,15 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:19:47 by mtohmeh           #+#    #+#             */
-/*   Updated: 2024/08/22 18:50:17 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2024/08/12 11:03:50 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/LIBFT.h"
 
-int	ft_lstsize(t_void_list *lst)
+int	ft_lstsize(t_voidlst *lst)
 {
-	t_void_list	*temp;
+	t_voidlst	*temp;
 	int			count;
 
 	count = 0;

@@ -198,7 +198,9 @@ void					put_pixel(t_mlx *mlx, int x, int y, int color);
 // Function prototypes
 void					win_init(t_minirt *minirt_struct, int total_width);
 int						close_window(t_minirt *minirt_struct);
-int						key_hook(int keycode, t_minirt *minirt_struct);
+int						key_press(int keycode, t_minirt *minirt_struct);
+int						key_release(int keycode, t_minirt *minirt_struct);
+int						loop_hook(t_minirt *minirt_struct);
 
 // Vector operations
 t_vector				subtract_vectors(t_vector v1, t_vector v2);

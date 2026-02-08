@@ -6,29 +6,29 @@
 /*   By: mtohmeh <mtohmeh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:20:28 by mtohmeh           #+#    #+#             */
-/*   Updated: 2024/08/02 14:05:02 by mtohmeh          ###   ########.fr       */
+/*   Updated: 2024/08/12 10:59:00 by mtohmeh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/LIBFT.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+char	*ft_strnstr(const char *str, const char *to_found, size_t len)
 {
 	size_t	i;
 	size_t	j;
 
 	i = 0;
-	if (needle[0] == '\0')
-		return ((char *)haystack);
-	while (haystack[i] != '\0' && i < len)
+	if (to_found[0] == '\0')
+		return ((char *)str);
+	while (str[i] != '\0' && i < len)
 	{
 		j = 0;
-		while (haystack[i + j] == needle[j] && needle[j] != '\0' && i + j < len)
+		while (str[i + j] == to_found[j] && to_found[j] != '\0' && i + j < len)
 		{
 			j++;
 		}
-		if (needle[j] == '\0')
-			return ((char *)&haystack[i]);
+		if (to_found[j] == '\0')
+			return ((char *)&str[i]);
 		i++;
 	}
 	return (NULL);

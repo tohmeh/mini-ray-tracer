@@ -58,14 +58,16 @@ float	compute_specular_light(t_vector normal, t_vector light_pos,
 	t_vector	view_dir;
 	t_vector	reflect_dir;
 	float		spec;
+	float		shininess;
 
+	shininess = 64.0f;
 	light_dir = normalize_vector(subtract_vectors(light_pos,
 				intersection_point));
 	view_dir = normalize_vector(subtract_vectors(camera_pos,
 				intersection_point));
 	reflect_dir = subtract_vectors(multiply_vector_by_scalar(normal, 2.0f
 				* dot_product(normal, light_dir)), light_dir);
-	spec = powf(fmax(dot_product(reflect_dir, view_dir), 0.0), 16.0f);
+	spec = powf(fmax(dot_product(reflect_dir, view_dir), 0.0), shininess);
 	return (spec);
 }
 

@@ -8,12 +8,12 @@ CC          = gcc
 DEBUG       = 0
 
 ifeq ($(DEBUG), 1)
-    CFLAGS  = -g -Wall -Wextra -Werror -I./minilibx-linux
+    CFLAGS  = -g -Wall -Wextra -Werror -fopenmp -I./minilibx-linux
 else
-    CFLAGS  = -Ofast -flto -march=native -funroll-loops -fno-plt -fstrict-aliasing -Wall -Wextra -Werror -I./minilibx-linux 
+    CFLAGS  = -Ofast -flto -march=native -funroll-loops -fno-plt -fstrict-aliasing -fopenmp -Wall -Wextra -Werror -I./minilibx-linux
 endif
 
-LDFLAGS     = -L./minilibx-linux -lmlx -lX11 -lXext -lm
+LDFLAGS     = -L./minilibx-linux -lmlx -lX11 -lXext -lm -fopenmp
 
 LIBFT_DIR   = LIBFT
 MINILIBX_DIR= minilibx-linux
