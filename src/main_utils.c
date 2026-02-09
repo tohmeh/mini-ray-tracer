@@ -15,10 +15,8 @@
 int	program_init(t_minirt *minirt, char *filename)
 {
 	t_scene	*scene;
-	int		total_width;
 
 	scene = malloc(sizeof(t_scene));
-	total_width = WIDTH + CONTROL_PANEL_WIDTH;
 	*scene = parse_elements(filename);
 	if (!scene->camera || !scene->ambient)
 	{
@@ -26,12 +24,12 @@ int	program_init(t_minirt *minirt, char *filename)
 		free_scene(scene);
 		return (0);
 	}
-	win_init(minirt, total_width);
+	win_init(minirt, WIDTH);
 	scene->object_hit = NULL;
 	minirt->scene = scene;
 	render_scene(*minirt->scene, minirt->mlx);
-	mlx_put_image_to_window(minirt->mlx->mlx, minirt->mlx->mlx_win, minirt->mlx->img,
-		CONTROL_PANEL_WIDTH, 0);
+	mlx_put_image_to_window(minirt->mlx->mlx, minirt->mlx->mlx_win,
+		minirt->mlx->img, 0, 0);
 	return (1);
 }
 

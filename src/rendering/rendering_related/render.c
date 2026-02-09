@@ -34,7 +34,7 @@ static float	compute_fresnel(t_vector normal, t_vector view_dir)
 
 	cos_theta = fabs(dot_product(normal, view_dir));
 	fresnel = powf(1.0f - cos_theta, 3.0f);
-	return (fresnel * 0.15f);
+	return (fresnel * 0.05f);
 }
 
 static void	calculate_light_contribution(t_light *light, t_hit_info hit,
@@ -51,21 +51,16 @@ static void	calculate_light_contribution(t_light *light, t_hit_info hit,
 	specular = compute_specular_light(hit.normal, light->position, hit.point,
 			camera->position);
 	light_distance = vector_length(subtract_vectors(light->position, hit.point));
-	attenuation = 1.0 / (1.0 + 0.02 * light_distance + 0.003 * light_distance
+	attenuation = 1.0 / (1.0 + 0.03 * light_distance + 0.005 * light_distance
 			* light_distance);
 	view_dir = normalize_vector(subtract_vectors(camera->position, hit.point));
 	fresnel = compute_fresnel(hit.normal, view_dir);
-	contrib->diffuse_r += (int)(hit.color.r * (diffuse * 0.7f + fresnel) * light->brightness * attenuation);
-	contrib->diffuse_g += (int)(hit.color.g * (diffuse * 0.7f + fresnel) * light->brightness * attenuation);
-	contrib->diffuse_b += (int)(hit.color.b * (diffuse * 0.7f + fresnel) * light->brightness * attenuation);
-	contrib->final_r += (int)(180.0f * specular * light->brightness * attenuation);
-	contrib->final_g += (int)(180.0f * specular * light->brightness * attenuation);
-	contrib->final_b += (int)(180.0f * specular * light->brightness * attenuation);
-}
-
-static float	apply_gamma_correction(float color)
-{
-	return (powf(color / 255.0f, 1.0f / 1.8f) * 255.0f);
+	contrib->diffuse_r += (int)(hit.color.r * (diffuse * 0.45f + fresnel) * light->brightness * attenuation);
+	contrib->diffuse_g += (int)(hit.color.g * (diffuse * 0.45f + fresnel) * light->brightness * attenuation);
+	contrib->diffuse_b += (int)(hit.color.b * (diffuse * 0.45f + fresnel) * light->brightness * attenuation);
+	contrib->final_r += (int)(100.0f * specular * light->brightness * attenuation);
+	contrib->final_g += (int)(100.0f * specular * light->brightness * attenuation);
+	contrib->final_b += (int)(100.0f * specular * light->brightness * attenuation);
 }
 
 static int	apply_lighting(t_scene scene, t_hit_info hit)
@@ -93,9 +88,6 @@ static int	apply_lighting(t_scene scene, t_hit_info hit)
 		contrib.final_g = 255;
 	if (contrib.final_b > 255)
 		contrib.final_b = 255;
-	contrib.final_r = (int)apply_gamma_correction(contrib.final_r);
-	contrib.final_g = (int)apply_gamma_correction(contrib.final_g);
-	contrib.final_b = (int)apply_gamma_correction(contrib.final_b);
 	return ((contrib.final_r << 16) | (contrib.final_g << 8) | contrib.final_b);
 }
 

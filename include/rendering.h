@@ -15,9 +15,8 @@
 
 # include <math.h>
 # include <stdlib.h>
-# define WIDTH 800
-# define HEIGHT 600
-# define CONTROL_PANEL_WIDTH 200
+# define WIDTH 500
+# define HEIGHT 500
 
 typedef struct s_minirt	t_minirt;
 

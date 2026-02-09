@@ -36,7 +36,6 @@ int	main(int argc, char **argv)
 		{
 			return (0);
 		}
-		draw_instruction_panel(minirt.mlx);
 		setup_hooks(minirt);
 		mlx_loop(minirt.mlx->mlx);
 	}

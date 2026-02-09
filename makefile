@@ -95,7 +95,9 @@ $(MINILIBX): | $(MINILIBX_DIR)
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+HEADERS = include/miniRT.h include/parsing.h include/rendering.h
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 

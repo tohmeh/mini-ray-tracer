@@ -18,9 +18,6 @@ int	mouse_handler(int button, int x, int y, void *param)
 	t_scene		*scene;
 	float		delta;
 
-	if (x < CONTROL_PANEL_WIDTH)
-		return (0);
-	x -= CONTROL_PANEL_WIDTH;
 	minirt = (t_minirt *)param;
 	scene = minirt->scene;
 	if (button == 1)
@@ -34,7 +31,7 @@ int	mouse_handler(int button, int x, int y, void *param)
 		resize_object(scene, delta);
 		render_scene(*scene, minirt->mlx);
 		mlx_put_image_to_window(minirt->mlx->mlx, minirt->mlx->mlx_win,
-			minirt->mlx->img, CONTROL_PANEL_WIDTH, 0);
+			minirt->mlx->img, 0, 0);
 	}
 	return (0);
 }

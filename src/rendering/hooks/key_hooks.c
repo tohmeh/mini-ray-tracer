@@ -70,8 +70,8 @@ void	process_movement_keys(t_minirt *rt, t_camera *cam)
 	float	move_speed;
 	float	rotation_speed;
 
-	move_speed = 0.15f;
-	rotation_speed = 0.02f;
+	move_speed = 0.07f;
+	rotation_speed = 0.01f;
 	if (rt->keys.w)
 		move_camera(cam, cam->direction, move_speed);
 	if (rt->keys.s)
@@ -112,7 +112,7 @@ int	loop_hook(t_minirt *rt)
 	{
 		render_scene(*rt->scene, rt->mlx);
 		mlx_put_image_to_window(rt->mlx->mlx, rt->mlx->mlx_win,
-			rt->mlx->img, CONTROL_PANEL_WIDTH, 0);
+			rt->mlx->img, 0, 0);
 		rt->keys.needs_render = 0;
 	}
 	return (0);
