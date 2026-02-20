@@ -1,27 +1,47 @@
 # Mini-Ray-Tracer
 
-A lightweight ray tracing implementation for 3D graphics rendering.
+A ray tracer written in C that renders 3D scenes with spheres, planes, and cylinders, with real-time camera navigation and interactive object manipulation.
 
-## Overview
+## Features
 
-Ray tracing is a powerful rendering technique that simulates the behavior of light rays to generate photorealistic images. This project implements a small-scale ray tracer as an introduction to 3D graphics programming.
+- Renders spheres, planes, and cylinders with accurate light and shadow calculations
+- Ambient, diffuse, and specular lighting with shadow casting
+- Real-time scene navigation using keyboard and mouse controls
+- Click any object in the scene to select and transform it
+- Reads scene definitions from `.rt` files
+- Built with OpenMP for parallel rendering
 
-In a ray tracing program, we start with a camera, some objects, and a light source. During execution, we send rays (which are like lines) from the camera through each pixel on the screen. To do this, we use certain equations to define the direction and position of each ray. If a ray hits an object in the scene, we color that pixel using the object’s color.
+## Getting Started
 
-But how do we know if a ray hits something? Back in high school, we learned that a line intersects a function if the equation becomes solvable when we plug in values — it's similar here. Each object (like a sphere, plane, or cylinder) has its own equation. We plug the ray’s formula into the object’s equation and, after simplifying, we usually get a quadratic equation. If that equation has a solution, it means there’s an intersection.
+```sh
+# Clone the repo (minilibx is fetched automatically on first build)
+git clone <repo-url> mini-ray-tracer
+cd mini-ray-tracer
 
-Once we render all basic objects, we apply ambient lighting — a general brightness added to all colors to simulate surrounding light. Then comes normal lighting, where we calculate how light hits the surface using the dot product between the light direction and the surface normal (which is a vector pointing out from the surface). Finally, we handle shadows by sending a ray from the intersection point to the light source. If something blocks that ray, the point is in shadow; if not, it’s lit.
+make
+
+./miniRT scenes/your_scene.rt
+```
+
+Controls: `WASD` to move the camera, arrow keys to rotate, `T/G` to resize the selected object, `Esc` to quit.
+
+## Project Structure
+
+```
+mini-ray-tracer/
+├── include/          # Header files for rendering and parsing
+├── src/
+│   ├── main.c
+│   ├── rendering/    # Ray math, lighting, hooks, and pixel output
+│   ├── parsing/      # Scene file reading and validation
+│   └── cleaners/     # Memory cleanup
+└── LIBFT/            # Bundled C utility library
+```
 
 ## Demo
 
-![Demo](image.png)  
-*This is a sample of what the program looks like when running a scene. We can rotate and navigate through the room and resize objects as we wish.*
+![Demo](image.png)
+*A rendered scene with ambient and diffuse lighting.*
 
-## File Structure
-
-![File Structure](file_structure.png)  
-*This image shows the structure of the project files and directories, giving a clear idea of how the codebase is organized.*
-
-## Conclusion
-
-This mini ray tracer project has been an enjoyable and educational first step into the world of 3D graphics programming. Implementing these fundamental ray tracing concepts from scratch provided valuable insights into how light simulation works in computer graphics. While this implementation focuses on core functionality with basic primitives and lighting models, it establishes a foundation for further exploration. I'm excited to continue learning and expanding my knowledge in 3D graphics in the future, potentially exploring advanced features like reflection, refraction, texture mapping, and more sophisticated lighting models.
+![File Structure](file_structure.png)
+*Project file layout.*
