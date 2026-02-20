@@ -43,5 +43,3 @@ mini-ray-tracer/
 ![Demo](image.png)
 *A rendered scene with ambient and diffuse lighting.*
 
-![File Structure](file_structure.png)
-*Project file layout.*
